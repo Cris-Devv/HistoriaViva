@@ -1,2 +1,2 @@
 # Atlas
-Atlas: Uma Jornada pela Terra é um jogo educativo com o objetivo de ensinar conceitos de Geografia
+Atlas: Uma Jornada pela Terra é um jogo educativo focado em ensinar sobre as camadas da terra
