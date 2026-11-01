@@ -1,0 +1,103 @@
+import { locations } from "../data/locations.js";
+import { renderHotspots } from "./hotspots.js";
+import {
+    getHistoryState,
+    goBack,
+    goForward,
+    startHistory,
+    visitLocation
+} from "./history.js";
+
+const sky = document.querySelector("#panorama-sky");
+const navigationContainer = document.querySelector("#navigation-points");
+let currentLocationId = null;
+let hasStarted = false;
+let panoramaRequestId = 0;
+let activePanorama = null;
+let panoramaState = "idle";
+
+function dispatchPanoramaEvent(type, locationId) {
+    if (type === "panoramaerror" && panoramaState === "error") return;
+    if (type === "panoramaloaded" && panoramaState === "loaded") return;
+
+    panoramaState = type === "panoramaerror" ? "error" : "loaded";
+    document.dispatchEvent(new CustomEvent(type, {
+        detail: { locationId }
+    }));
+}
+
+sky.addEventListener("materialtextureloaded", () => {
+    if (sky.getAttribute("src") !== activePanorama) return;
+    dispatchPanoramaEvent("panoramaloaded", currentLocationId);
+});
+
+sky.addEventListener("materialtextureerror", () => {
+    if (sky.getAttribute("src") !== activePanorama) return;
+    console.error("Não foi possível carregar o panorama:", activePanorama);
+    dispatchPanoramaEvent("panoramaerror", currentLocationId);
+});
+
+export function loadLocation(locationId, { recordHistory = true } = {}) {
+
+    const location = locations[locationId];
+
+    if (!location) {
+        console.error("Localização não encontrada:", locationId);
+        return false;
+    }
+
+    if (recordHistory) {
+        if (!hasStarted) {
+            startHistory(locationId);
+            hasStarted = true;
+        } else {
+            visitLocation(locationId);
+        }
+    }
+
+    currentLocationId = locationId;
+    activePanorama = location.panorama;
+    const requestId = ++panoramaRequestId;
+    panoramaState = "loading";
+    document.dispatchEvent(new CustomEvent("panoramaloading", {
+        detail: { locationId }
+    }));
+    sky.setAttribute("src", location.panorama);
+    renderHotspots(location, navigationContainer, (target) => loadLocation(target));
+    document.dispatchEvent(new CustomEvent("locationchange", {
+        detail: { location, history: getHistoryState() }
+    }));
+
+    const image = new Image();
+    image.onload = () => {
+        if (requestId !== panoramaRequestId) return;
+        if (sky.getAttribute("src") !== location.panorama) return;
+        dispatchPanoramaEvent("panoramaloaded", locationId);
+    };
+    image.onerror = () => {
+        if (requestId !== panoramaRequestId) return;
+        if (sky.getAttribute("src") !== location.panorama) return;
+        console.error("Não foi possível carregar o panorama:", location.panorama);
+        dispatchPanoramaEvent("panoramaerror", locationId);
+    };
+    image.src = location.panorama;
+
+    return true;
+}
+
+export function navigateBack() {
+    const locationId = goBack();
+    return locationId ? loadLocation(locationId, { recordHistory: false }) : false;
+}
+
+export function navigateForward() {
+    const locationId = goForward();
+    return locationId ? loadLocation(locationId, { recordHistory: false }) : false;
+}
+
+export function navigateFirst() {
+    const firstLocationId = Object.keys(locations)[0];
+    return currentLocationId === firstLocationId
+        ? false
+        : loadLocation(firstLocationId);
+}
