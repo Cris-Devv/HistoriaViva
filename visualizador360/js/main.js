@@ -25,5 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#panorama-status").textContent =
             "Não foi possível carregar este panorama. Tente novamente.";
     });
+    document.addEventListener("panoramaloading", () => {
+        document.querySelector("#panorama-status").textContent = "Carregando panorama...";
+    });
+    document.addEventListener("panoramaloaded", () => {
+        document.querySelector("#panorama-status").textContent = "";
+    });
     loadLocation(Object.keys(locations)[0]);
 });

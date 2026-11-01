@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Historical content lives in `src/content/*` as typed data (stops, modular `extensoes`, `fontes`); UI and the 3D scene only render it — so content can be revised/sourced without touching components.
+- Historical content lives in `interface/src/content/*` as typed data (stops, modular `extensoes`, `fontes`); UI and the 3D scene only render it — so content can be revised/sourced without touching components.
 - The 3D journey route uses `ssr: false` and lazy-loads the R3F scene; VR uses @react-three/xr (WebXR) and the VR button only shows when `immersive-vr` is supported.

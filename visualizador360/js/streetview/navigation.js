@@ -12,10 +12,29 @@ const sky = document.querySelector("#panorama-sky");
 const navigationContainer = document.querySelector("#navigation-points");
 let currentLocationId = null;
 let hasStarted = false;
+let panoramaRequestId = 0;
+let activePanorama = null;
+let panoramaState = "idle";
+
+function dispatchPanoramaEvent(type, locationId) {
+    if (type === "panoramaerror" && panoramaState === "error") return;
+    if (type === "panoramaloaded" && panoramaState === "loaded") return;
+
+    panoramaState = type === "panoramaerror" ? "error" : "loaded";
+    document.dispatchEvent(new CustomEvent(type, {
+        detail: { locationId }
+    }));
+}
+
+sky.addEventListener("materialtextureloaded", () => {
+    if (sky.getAttribute("src") !== activePanorama) return;
+    dispatchPanoramaEvent("panoramaloaded", currentLocationId);
+});
 
 sky.addEventListener("materialtextureerror", () => {
-    console.error("Não foi possível carregar o panorama:", sky.getAttribute("src"));
-    document.dispatchEvent(new CustomEvent("panoramaerror"));
+    if (sky.getAttribute("src") !== activePanorama) return;
+    console.error("Não foi possível carregar o panorama:", activePanorama);
+    dispatchPanoramaEvent("panoramaerror", currentLocationId);
 });
 
 export function loadLocation(locationId, { recordHistory = true } = {}) {
@@ -37,11 +56,32 @@ export function loadLocation(locationId, { recordHistory = true } = {}) {
     }
 
     currentLocationId = locationId;
+    activePanorama = location.panorama;
+    const requestId = ++panoramaRequestId;
+    panoramaState = "loading";
+    document.dispatchEvent(new CustomEvent("panoramaloading", {
+        detail: { locationId }
+    }));
     sky.setAttribute("src", location.panorama);
     renderHotspots(location, navigationContainer, (target) => loadLocation(target));
     document.dispatchEvent(new CustomEvent("locationchange", {
         detail: { location, history: getHistoryState() }
     }));
+
+    const image = new Image();
+    image.onload = () => {
+        if (requestId !== panoramaRequestId) return;
+        if (sky.getAttribute("src") !== location.panorama) return;
+        dispatchPanoramaEvent("panoramaloaded", locationId);
+    };
+    image.onerror = () => {
+        if (requestId !== panoramaRequestId) return;
+        if (sky.getAttribute("src") !== location.panorama) return;
+        console.error("Não foi possível carregar o panorama:", location.panorama);
+        dispatchPanoramaEvent("panoramaerror", locationId);
+    };
+    image.src = location.panorama;
+
     return true;
 }
 

@@ -21,6 +21,7 @@ function renderLocations(currentId, onSelect) {
         button.type = "button";
         button.className = "location-option";
         button.textContent = location.name;
+        button.setAttribute("aria-label", `Selecionar ${location.name}`);
         button.setAttribute("aria-pressed", String(location.id === currentId));
         button.classList.toggle("is-active", location.id === currentId);
         button.addEventListener("click", () => {
@@ -38,14 +39,22 @@ function setDisabled(button, disabled) {
 
 export function initializeUi({ onSelect, onBack, onForward, onFirst }) {
     elements.toggle.addEventListener("click", () => {
-        const isOpen = elements.panel.classList.toggle("is-open");
-        elements.panel.setAttribute("aria-hidden", String(!isOpen));
-        elements.toggle.setAttribute("aria-expanded", String(isOpen));
+        if (elements.panel.classList.contains("is-open")) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
     elements.close.addEventListener("click", closeMenu);
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && elements.panel.classList.contains("is-open")) {
+            closeMenu();
+        }
+    });
     elements.back.addEventListener("click", onBack);
     elements.forward.addEventListener("click", onForward);
     elements.first.addEventListener("click", onFirst);
+    closeMenu({ restoreFocus: false });
     renderLocations("", onSelect);
 }
 
@@ -59,8 +68,18 @@ export function updateUi({ location, history, onSelect }) {
     setDisabled(elements.first, !history.canGoBack && location.id === Object.keys(locations)[0]);
 }
 
-function closeMenu() {
+function openMenu() {
+    elements.panel.classList.add("is-open");
+    elements.panel.removeAttribute("inert");
+    elements.panel.setAttribute("aria-hidden", "false");
+    elements.toggle.setAttribute("aria-expanded", "true");
+    elements.close.focus();
+}
+
+function closeMenu({ restoreFocus = true } = {}) {
     elements.panel.classList.remove("is-open");
+    elements.panel.setAttribute("inert", "");
     elements.panel.setAttribute("aria-hidden", "true");
     elements.toggle.setAttribute("aria-expanded", "false");
+    if (restoreFocus) elements.toggle.focus();
 }

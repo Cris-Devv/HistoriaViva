@@ -8,9 +8,9 @@ export function startHistory(locationId) {
 }
 
 export function visitLocation(locationId) {
-    if (backStack.at(-1) !== locationId) {
-        backStack.push(locationId);
-    }
+    if (backStack.at(-1) === locationId) return;
+
+    backStack.push(locationId);
     forwardStack.length = 0;
 }
 
