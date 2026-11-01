@@ -1,61 +1,63 @@
 import { locations } from "../data/locations.js";
+import { renderHotspots } from "./hotspots.js";
+import {
+    getHistoryState,
+    goBack,
+    goForward,
+    startHistory,
+    visitLocation
+} from "./history.js";
 
 const sky = document.querySelector("#panorama-sky");
-const navigationContainer = document.querySelector(
-    "#navigation-points"
-);
+const navigationContainer = document.querySelector("#navigation-points");
+let currentLocationId = null;
+let hasStarted = false;
 
-// Carrega uma localização
-export function loadLocation(locationId) {
+sky.addEventListener("materialtextureerror", () => {
+    console.error("Não foi possível carregar o panorama:", sky.getAttribute("src"));
+    document.dispatchEvent(new CustomEvent("panoramaerror"));
+});
+
+export function loadLocation(locationId, { recordHistory = true } = {}) {
 
     const location = locations[locationId];
 
     if (!location) {
         console.error("Localização não encontrada:", locationId);
-        return;
+        return false;
     }
 
-    // Atualiza o panorama
+    if (recordHistory) {
+        if (!hasStarted) {
+            startHistory(locationId);
+            hasStarted = true;
+        } else {
+            visitLocation(locationId);
+        }
+    }
+
+    currentLocationId = locationId;
     sky.setAttribute("src", location.panorama);
-
-    // Atualiza os pontos de navegação
-    renderNavigation(location);
-
-    console.log("Localização atual:", location.name);
+    renderHotspots(location, navigationContainer, (target) => loadLocation(target));
+    document.dispatchEvent(new CustomEvent("locationchange", {
+        detail: { location, history: getHistoryState() }
+    }));
+    return true;
 }
 
+export function navigateBack() {
+    const locationId = goBack();
+    return locationId ? loadLocation(locationId, { recordHistory: false }) : false;
+}
 
-// Cria os pontos de navegação
-function renderNavigation(location) {
+export function navigateForward() {
+    const locationId = goForward();
+    return locationId ? loadLocation(locationId, { recordHistory: false }) : false;
+}
 
-    navigationContainer.innerHTML = "";
-
-    location.connections.forEach(connection => {
-
-        const hotspot = document.createElement("a-sphere");
-
-        hotspot.setAttribute("class", "hotspot");
-
-        hotspot.setAttribute(
-            "position",
-            `${connection.position.x}
-             ${connection.position.y}
-             ${connection.position.z}`
-        );
-
-        hotspot.setAttribute("radius", "0.25");
-
-        hotspot.setAttribute(
-            "material",
-            "color: #FFD700; shader: standard"
-        );
-
-        // Evento de clique
-        hotspot.addEventListener("click", () => {
-            loadLocation(connection.target);
-        });
-
-        navigationContainer.appendChild(hotspot);
-
-    });
+export function navigateFirst() {
+    const firstLocationId = Object.keys(locations)[0];
+    return currentLocationId === firstLocationId
+        ? false
+        : loadLocation(firstLocationId);
 }

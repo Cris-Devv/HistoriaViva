@@ -3,61 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Recife pelo Tempo</title>
-
-    <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-
-    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/streetview.css">
 </head>
-
 <body>
-
-    <header>
-        <h1>Recife pelo Tempo</h1>
-        <p>Explore a cidade através do tempo.</p>
+    <header class="site-header">
+        <div>
+            <p class="eyebrow">Experiência histórica imersiva</p>
+            <h1>Recife pelo Tempo</h1>
+            <p>Explore a cidade através do tempo.</p>
+        </div>
+        <button id="locations-toggle" class="button button-outline" type="button"
+            aria-controls="locations-panel" aria-expanded="false">
+            <span aria-hidden="true">☰</span> Locais
+        </button>
     </header>
 
     <main>
-        <section id="streetview-container">
+        <aside id="locations-panel" class="locations-panel" aria-hidden="true">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Explore</p>
+                    <h2>Escolha um local</h2>
+                </div>
+                <button id="locations-close" class="icon-button" type="button" aria-label="Fechar menu">×</button>
+            </div>
+            <nav id="locations-list" aria-label="Localidades disponíveis"></nav>
+        </aside>
 
+        <section id="streetview-container" aria-label="Visualização panorâmica">
             <a-scene embedded>
                 <a-assets>
-                    <img
-                        id="panorama"
-                        src="assets/images/panoramas/teste-01.jpg"
-                    >
+                    <img id="panorama" src="assets/images/panoramas/teste-01.jpg">
                 </a-assets>
-
-                <!-- Ambiente 360° -->
-                <a-sky
-                    id="panorama-sky"
-                    src="#panorama"
-                    rotation="0 -90 0"
-                ></a-sky>
-
-                <!-- Câmera do usuário -->
+                <a-sky id="panorama-sky" src="#panorama" rotation="0 -90 0"></a-sky>
                 <a-entity position="0 1.6 0">
                     <a-camera
                         look-controls="reverseMouseDrag: false"
                         wasd-controls="enabled: false"
                         cursor="rayOrigin: mouse; fuse: false"
-                        raycaster="objects: .hotspot"
-                    ></a-camera>
+                        raycaster="objects: .hotspot">
+                    </a-camera>
                 </a-entity>
-
-                <!-- Os pontos de navegação serão adicionados pelo JS -->
                 <a-entity id="navigation-points"></a-entity>
-
             </a-scene>
-
         </section>
+
+        <section class="experience-bar" aria-live="polite">
+            <div class="location-summary">
+                <p class="eyebrow">Você está em</p>
+                <h2 id="location-name">Carregando local...</h2>
+                <p id="location-period"></p>
+                <p id="location-description"></p>
+                <p id="panorama-status" role="status"></p>
+            </div>
+            <div class="navigation-controls" aria-label="Controles de navegação">
+                <button id="navigation-back" class="control-button" type="button" aria-label="Voltar para o local anterior">
+                    <span aria-hidden="true">←</span> <span class="control-label">Voltar</span>
+                </button>
+                <button id="navigation-first" class="control-button" type="button" aria-label="Retornar ao primeiro local">
+                    <span aria-hidden="true">⌂</span> <span class="control-label">Início</span>
+                </button>
+                <button id="navigation-forward" class="control-button" type="button" aria-label="Avançar para o próximo local">
+                    <span class="control-label">Avançar</span> <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+        <p class="instructions">Arraste para olhar ao redor. Toque nos pontos dourados para visitar outro local.</p>
     </main>
-
     <script type="module" src="js/main.js"></script>
-
 </body>
 </html>

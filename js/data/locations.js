@@ -5,6 +5,8 @@ export const locations = {
 
         panorama: "assets/images/panoramas/teste-01.jpg",
 
+        period: "Recife contemporâneo",
+
         description: "Primeiro ambiente de teste.",
 
         connections: [
@@ -26,6 +28,8 @@ export const locations = {
         name: "Praça de Teste 02",
 
         panorama: "assets/images/panoramas/teste-06.jpg",
+
+        period: "Uma nova perspectiva da cidade",
 
         description: "Segundo ambiente de teste.",
 
