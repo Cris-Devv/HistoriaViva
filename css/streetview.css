@@ -1,0 +1,11 @@
+#streetview-container {
+    width: 100%;
+    height: 75vh;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+a-scene {
+    width: 100%;
+    height: 100%;
+}
