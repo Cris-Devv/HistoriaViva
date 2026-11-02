@@ -13,7 +13,7 @@ export const Route = createFileRoute("/viagens/recife-holandes_/percurso")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Viagem: Recife neerlandês — História Viva PE" },
+      { title: "Viagem: Recife neerlandês — Recife pelo Tempo" },
       { name: "description", content: "Percurso guiado em 3D pelo Recife durante o domínio neerlandês." },
       { property: "og:title", content: "Viagem pelo Recife neerlandês" },
       { property: "og:description", content: "Cinco paradas temáticas sobre o Recife de 1630 a 1654." },
@@ -46,8 +46,13 @@ function Percurso() {
 
   // Avanço automático
   useEffect(() => {
-    if (!auto) return;
-    const t = setTimeout(() => setI((n) => (n + 1 < total ? n + 1 : n)), AUTO_SECONDS * 1000);
+    if (!auto || i >= total - 1) {
+      if (auto && i >= total - 1) setAuto(false);
+      return;
+    }
+    const t = setTimeout(() => {
+      setI((n) => Math.min(n + 1, total - 1));
+    }, AUTO_SECONDS * 1000);
     return () => clearTimeout(t);
   }, [auto, i, total]);
 
@@ -61,11 +66,15 @@ function Percurso() {
 
   const narrar = () => {
     const synth = window.speechSynthesis;
-    if (!synth) return;
+    if (!synth) {
+      setFalando(false);
+      return;
+    }
     if (falando) { synth.cancel(); setFalando(false); return; }
     const u = new SpeechSynthesisUtterance(stop.narracao);
     u.lang = "pt-BR";
     u.onend = () => setFalando(false);
+    u.onerror = () => setFalando(false);
     synth.speak(u);
     setFalando(true);
   };
@@ -75,15 +84,27 @@ function Percurso() {
       <div
         className="relative h-[62vh] min-h-[360px] touch-none select-none"
         data-scene-ready={ready ? "" : undefined}
-        onPointerDown={(e) => (drag.current = { x: e.clientX, y: e.clientY })}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          drag.current = { x: e.clientX, y: e.clientY };
+        }}
         onPointerMove={(e) => {
           if (!drag.current) return;
           look.current.yaw = Math.max(-1.2, Math.min(1.2, look.current.yaw + (e.clientX - drag.current.x) * 0.004));
           look.current.pitch = Math.max(-0.5, Math.min(0.5, look.current.pitch + (e.clientY - drag.current.y) * 0.003));
           drag.current = { x: e.clientX, y: e.clientY };
         }}
-        onPointerUp={() => (drag.current = null)}
-        onPointerLeave={() => (drag.current = null)}
+        onPointerUp={(e) => {
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+          drag.current = null;
+        }}
+        onPointerLeave={(e) => {
+          if (!e.currentTarget.hasPointerCapture(e.pointerId)) drag.current = null;
+        }}
+        onPointerCancel={(e) => {
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+          drag.current = null;
+        }}
       >
         <Suspense fallback={<div className="grid h-full place-items-center text-sm opacity-70">Carregando cenário…</div>}>
           <RecifeScene stop={stop} look={look} store={store} onReady={() => setReady(true)} />
@@ -109,9 +130,9 @@ function Percurso() {
 
         <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 p-3">
           <Button variant="glass" size="icon" className="size-11" aria-label="Parada anterior" disabled={i === 0} onClick={() => setI(i - 1)}><ChevronLeft /></Button>
-          <div className="flex flex-1 gap-1" role="progressbar" aria-valuemin={1} aria-valuemax={total} aria-valuenow={i + 1} aria-label="Progresso da viagem">
+          <div className="flex flex-1 gap-1" aria-label="Navegação entre paradas">
             {paradas.map((p, k) => (
-              <button key={p.id} type="button" onClick={() => setI(k)} aria-label={`Ir para ${p.tema}`} className={`h-2 flex-1 rounded-full transition ${k <= i ? "bg-accent" : "bg-ink-foreground/25"}`} />
+              <button key={p.id} type="button" onClick={() => setI(k)} aria-label={`Ir para ${p.tema}${k === i ? " (atual)" : ""}`} aria-current={k === i ? "step" : undefined} className={`h-2 flex-1 rounded-full transition ${k <= i ? "bg-accent" : "bg-ink-foreground/25"}`} />
             ))}
           </div>
           <Button variant="glass" className="h-11" onClick={() => setAuto(!auto)} aria-pressed={auto}>
@@ -119,6 +140,7 @@ function Percurso() {
           </Button>
           <Button variant="glass" size="icon" className="size-11" aria-label="Próxima parada" disabled={i === total - 1} onClick={() => setI(i + 1)}><ChevronRight /></Button>
         </div>
+        <div className="sr-only" role="progressbar" aria-valuemin={1} aria-valuemax={total} aria-valuenow={i + 1} aria-label={`Progresso da viagem: parada ${i + 1} de ${total}`} />
       </div>
 
       <div className="bg-background text-foreground">

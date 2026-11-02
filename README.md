@@ -32,8 +32,21 @@ npm run dev
 Para executar o visualizador independente:
 
 ```bash
-npx vite visualizador360 --host 127.0.0.1 --port 4174
+cd visualizador360
+python -m http.server 4174
 ```
 
-Depois, abra a URL indicada pelo servidor. O visualizador deve ser executado por
-HTTP para que os módulos ES e os panoramas sejam carregados corretamente.
+Depois, abra `http://127.0.0.1:4174/`. O visualizador precisa ser servido por
+HTTP para que os módulos ES, os panoramas e os arquivos de áudio sejam carregados
+corretamente; não abra `index.html` diretamente com `file://`.
+
+O visualizador 360° é independente da interface React. Para adicionar uma
+localidade, edite `visualizador360/js/data/locations.js` com `id`, nome, período,
+descrição e caminho do panorama. Cadastre hotspots de navegação em `connections`,
+com `target`, `label` e `position`; cadastre pontos informativos em
+`infoHotspots`, com `id`, título, descrição e posição. Arquivos de áudio devem
+ficar em `visualizador360/assets/audio/` e ser referenciados por caminho relativo.
+
+O projeto recomenda npm: execute `npm install` e os comandos da interface dentro
+de `interface/`. O visualizador independente não requer instalação de
+dependências.

@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre o projeto — História Viva PE" },
-      { name: "description", content: "O projeto História Viva PE, o óculos VR maker e o que já está implementado." },
-      { property: "og:title", content: "Sobre o projeto — História Viva PE" },
+      { title: "Sobre o projeto — Recife pelo Tempo" },
+      { name: "description", content: "O projeto Recife pelo Tempo, o óculos VR maker e o que já está implementado." },
+      { property: "og:title", content: "Sobre o projeto — Recife pelo Tempo" },
       { property: "og:description", content: "Educação, tecnologia e a história de Pernambuco." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -29,7 +29,7 @@ function Sobre() {
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-4xl font-semibold">Sobre o projeto</h1>
       <div className="mt-6 space-y-4 leading-relaxed text-muted-foreground">
-        <p>O História Viva PE é uma plataforma educacional para estudantes, professores e o público em geral conhecerem períodos da história de Pernambuco por meio de viagens virtuais guiadas.</p>
+        <p>O Recife pelo Tempo é uma plataforma educacional para estudantes, professores e o público em geral conhecerem períodos da história de Pernambuco por meio de viagens virtuais guiadas.</p>
         <p>O projeto inclui um artefato maker: um óculos de realidade virtual que usa o smartphone como tela. A plataforma roda no navegador; com WebXR disponível, a cena é exibida em visão estereoscópica e o visitante olha ao redor movendo a cabeça, enquanto o percurso continua automático.</p>
       </div>
       <h2 className="mt-12 text-2xl font-semibold">O que já funciona</h2>

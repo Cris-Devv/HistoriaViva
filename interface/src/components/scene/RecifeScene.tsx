@@ -1,4 +1,4 @@
-import { useMemo, useRef, type MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer, Html } from "@react-three/drei";
 import { XR, XROrigin, useXR, type XRStore } from "@react-three/xr";
@@ -42,6 +42,11 @@ function Ground() {
   const grass = useMemo(() => canvasTexture(noise("#6f8a4c", ["#5d7a3e", "#7f9a58", "#4f6a35"]), 8), []);
   const water = useMemo(() => canvasTexture(noise("#2f6f86", ["#3a7f95", "#286276", "#4a8fa3"], 4000), 10), []);
   const waterRef = useRef<THREE.Mesh>(null);
+  useEffect(() => () => {
+    sand.dispose();
+    grass.dispose();
+    water.dispose();
+  }, [grass, sand, water]);
   useFrame((_, d) => {
     if (waterRef.current) (waterRef.current.material as THREE.MeshStandardMaterial).map!.offset.x += d * 0.01;
   });
@@ -187,6 +192,7 @@ function Rig({ stop, look, onReady }: { stop: Parada; look: MutableRefObject<Loo
   const session = useXR((s) => s.session);
   const origin = useRef<THREE.Group>(null);
   const target = useRef(new THREE.Vector3(...stop.alvo));
+  const goal = useMemo(() => new THREE.Vector3(...stop.alvo), [stop]);
   const ready = useRef(false);
   const tmp = useMemo(() => new THREE.Vector3(), []);
 
@@ -194,7 +200,7 @@ function Rig({ stop, look, onReady }: { stop: Parada; look: MutableRefObject<Loo
     const dt = Math.min(delta, 0.05);
     const k = 1 - Math.exp(-SPEED * dt);
     tmp.set(...stop.camera);
-    target.current.lerp(new THREE.Vector3(...stop.alvo), k);
+    target.current.lerp(goal, k);
     if (session && origin.current) {
       // Em VR o visitante controla a rotação com a cabeça; o percurso move a origem.
       origin.current.position.lerp(tmp.setY(stop.camera[1] - HEAD), k);

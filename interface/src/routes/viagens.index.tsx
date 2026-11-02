@@ -5,9 +5,9 @@ import { catalogo } from "@/content/catalogo";
 export const Route = createFileRoute("/viagens/")({
   head: () => ({
     meta: [
-      { title: "Viagens históricas — História Viva PE" },
+      { title: "Viagens históricas — Recife pelo Tempo" },
       { name: "description", content: "Catálogo de experiências históricas imersivas de Pernambuco." },
-      { property: "og:title", content: "Viagens históricas — História Viva PE" },
+      { property: "og:title", content: "Viagens históricas — Recife pelo Tempo" },
       { property: "og:description", content: "Escolha um período da história pernambucana para visitar." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

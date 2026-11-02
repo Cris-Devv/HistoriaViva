@@ -7,9 +7,9 @@ import { experiencia, paradas } from "@/content/recife-holandes";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "História Viva PE — Conheça Pernambuco através do tempo" },
+      { title: "Recife pelo Tempo — Conheça Pernambuco através do tempo" },
       { name: "description", content: "Viagens históricas imersivas pela história de Pernambuco, no navegador ou com óculos VR." },
-      { property: "og:title", content: "História Viva PE" },
+      { property: "og:title", content: "Recife pelo Tempo" },
       { property: "og:description", content: "Conheça Pernambuco através do tempo com viagens históricas guiadas em 3D." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -82,7 +82,7 @@ function Index() {
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-20 md:grid-cols-[1fr_1.2fr]">
           <h2 className="text-3xl font-semibold">Um projeto maker com realidade virtual</h2>
           <div className="space-y-4 text-muted-foreground">
-            <p>O História Viva PE é acompanhado de um óculos VR artesanal que usa o smartphone como tela. A viagem funciona no navegador, sem instalar aplicativos.</p>
+            <p>O Recife pelo Tempo é acompanhado de um óculos VR artesanal que usa o smartphone como tela. A viagem funciona no navegador, sem instalar aplicativos.</p>
             <p>Quando o aparelho é compatível com WebXR, o botão de modo VR abre a visão estereoscópica. Caso contrário, a experiência segue no modo convencional.</p>
             <Link to="/sobre" className="inline-block font-medium text-primary hover:underline">Saiba mais sobre o projeto →</Link>
           </div>
