@@ -18,6 +18,7 @@ button { font: inherit; }
     justify-content: space-between;
     padding: 1rem clamp(1rem, 4vw, 3rem);
 }
+.is-embedded .site-header { display: none; }
 .site-header h1, .site-header p, .location-summary h2, .location-summary p { margin: 0; }
 .site-header h1 { font-size: clamp(1.35rem, 3vw, 2rem); }
 .site-header > div > p:last-child { color: #cbe8e0; font-size: .9rem; margin-top: .2rem; }
@@ -46,6 +47,7 @@ button { font: inherit; }
     overflow: hidden;
     position: relative;
 }
+.is-embedded #streetview-container { height: min(68vh, 720px); }
 a-scene { height: 100%; width: 100%; }
 
 .locations-panel {

@@ -1,5 +1,5 @@
 const panorama01 = new URL(
-    "../../assets/images/panoramas/teste-01.jpg",
+    "../../assets/images/panoramas/teste-01.webp",
     import.meta.url
 ).href;
 const panorama06 = new URL(
@@ -84,7 +84,9 @@ function isValidAudioPath(audio) {
     if (typeof audio !== "string" || !audio.trim()) return false;
 
     try {
-        const base = typeof document === "undefined" ? "http://localhost/" : document.baseURI;
+        const base = typeof document === "undefined"
+            ? "https://recife-pelo-tempo.invalid/"
+            : document.baseURI;
         const url = new URL(audio, base);
         const isExternal = url.protocol === "http:" || url.protocol === "https:";
         const isLocalAudio = /^(?:\.\/)?assets\/audio\//.test(audio);

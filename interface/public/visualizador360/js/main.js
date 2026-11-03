@@ -8,6 +8,10 @@ import { locations } from "./data/locations.js";
 import { initializeUi, updateUi } from "./ui.js";
 import { initializePopups } from "./popups.js";
 
+if (new URLSearchParams(window.location.search).has("embedded")) {
+    document.body.classList.add("is-embedded");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initializePopups();
     initializeUi({

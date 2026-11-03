@@ -47,12 +47,21 @@ export function SiteFooter() {
         <div className="text-sm opacity-80">
           <p className="font-semibold">Navegação</p>
           <ul className="mt-2 space-y-1">
-            <li><Link to="/viagens" className="hover:underline">Viagens históricas</Link></li>
-            <li><Link to="/sobre" className="hover:underline">Sobre o projeto e VR</Link></li>
+            <li>
+              <Link to="/viagens" className="hover:underline">
+                Viagens históricas
+              </Link>
+            </li>
+            <li>
+              <Link to="/sobre" className="hover:underline">
+                Sobre o projeto
+              </Link>
+            </li>
           </ul>
         </div>
         <p className="text-sm opacity-70">
-          Protótipo educacional · Versão 0.1. Conteúdo em revisão para inclusão de fontes bibliográficas.
+          Protótipo educacional · Versão 0.1. Conteúdo em revisão para inclusão de fontes
+          bibliográficas.
         </p>
       </div>
     </footer>
