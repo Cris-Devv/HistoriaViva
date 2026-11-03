@@ -1,5 +1,6 @@
 import { locations } from "../data/locations.js";
-import { renderHotspots } from "./hotspots.js";
+import { renderHotspots, renderInfoHotspots } from "./hotspots.js";
+import { closePopup } from "../popups.js";
 import {
     getHistoryState,
     goBack,
@@ -10,9 +11,9 @@ import {
 
 const sky = document.querySelector("#panorama-sky");
 const navigationContainer = document.querySelector("#navigation-points");
+const informationContainer = document.querySelector("#information-points");
 let currentLocationId = null;
 let hasStarted = false;
-let panoramaRequestId = 0;
 let activePanorama = null;
 let panoramaState = "idle";
 
@@ -56,31 +57,22 @@ export function loadLocation(locationId, { recordHistory = true } = {}) {
     }
 
     currentLocationId = locationId;
+    closePopup({ restoreFocus: false });
     activePanorama = location.panorama;
-    const requestId = ++panoramaRequestId;
     panoramaState = "loading";
     document.dispatchEvent(new CustomEvent("panoramaloading", {
         detail: { locationId }
     }));
     sky.setAttribute("src", location.panorama);
     renderHotspots(location, navigationContainer, (target) => loadLocation(target));
+    renderInfoHotspots(location, informationContainer, (infoHotspot, opener) => {
+        document.dispatchEvent(new CustomEvent("infohotspotselect", {
+            detail: { hotspot: infoHotspot, opener }
+        }));
+    });
     document.dispatchEvent(new CustomEvent("locationchange", {
         detail: { location, history: getHistoryState() }
     }));
-
-    const image = new Image();
-    image.onload = () => {
-        if (requestId !== panoramaRequestId) return;
-        if (sky.getAttribute("src") !== location.panorama) return;
-        dispatchPanoramaEvent("panoramaloaded", locationId);
-    };
-    image.onerror = () => {
-        if (requestId !== panoramaRequestId) return;
-        if (sky.getAttribute("src") !== location.panorama) return;
-        console.error("Não foi possível carregar o panorama:", location.panorama);
-        dispatchPanoramaEvent("panoramaerror", locationId);
-    };
-    image.src = location.panorama;
 
     return true;
 }

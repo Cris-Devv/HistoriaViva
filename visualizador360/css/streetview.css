@@ -6,3 +6,132 @@
 .hotspot:focus {
     filter: brightness(1.15);
 }
+
+.info-hotspot {
+    background: #8edbc7;
+    border: 0.06rem solid #123b52;
+    border-radius: 50%;
+    color: #123b52;
+    cursor: pointer;
+    font-weight: 800;
+    min-height: 44px;
+    min-width: 44px;
+    text-align: center;
+}
+
+.info-hotspot:hover,
+.info-hotspot:focus {
+    filter: brightness(1.2);
+}
+
+.information-list {
+    background: #123b52e8;
+    border: 1px solid #8edbc7;
+    border-radius: .6rem;
+    display: grid;
+    gap: .35rem;
+    max-width: min(280px, calc(100% - 2rem));
+    padding: .5rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 3;
+}
+
+.information-list[hidden] { display: none; }
+.information-option {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: .35rem;
+    color: #fff;
+    cursor: pointer;
+    min-height: 44px;
+    padding: .45rem .6rem;
+    text-align: left;
+}
+.information-option:hover,
+.information-option:focus-visible { background: #8edbc733; border-color: #8edbc7; }
+
+.info-popup {
+    align-items: center;
+    background: #102b3b66;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    padding: 1rem;
+    position: absolute;
+    z-index: 4;
+}
+
+.info-popup[hidden] {
+    display: none;
+}
+
+.info-popup-card {
+    background: #123b52;
+    border: 1px solid #8edbc7;
+    border-radius: .85rem;
+    box-shadow: 0 16px 40px #102b3bcc;
+    color: #fff;
+    max-width: 430px;
+    padding: 1.25rem;
+    width: min(100%, 430px);
+}
+
+.info-popup-heading {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-popup-icon {
+    align-items: center;
+    background: #8edbc7;
+    border-radius: 50%;
+    color: #123b52;
+    display: inline-flex;
+    font-weight: 800;
+    height: 1.7rem;
+    justify-content: center;
+    width: 1.7rem;
+}
+
+.info-popup-card h2 {
+    font-size: 1.25rem;
+    margin: .4rem 0 .6rem;
+}
+
+.info-popup-card p {
+    line-height: 1.5;
+    margin: 0;
+}
+
+.info-popup-card .icon-button {
+    color: #fff;
+}
+
+.info-popup-audio {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.button-audio,
+.button-audio-stop {
+    background: #8edbc7;
+    color: #123b52;
+    padding: .5rem .75rem;
+}
+
+.button-audio-stop {
+    background: transparent;
+    border: 1px solid #8edbc7;
+    color: #fff;
+}
+
+.info-popup-audio-status {
+    flex-basis: 100%;
+    font-size: .8rem;
+}

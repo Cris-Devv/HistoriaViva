@@ -7,7 +7,7 @@ import { experiencia, paradas } from "@/content/recife-holandes";
 export const Route = createFileRoute("/viagens/recife-holandes")({
   head: () => ({
     meta: [
-      { title: "Recife neerlandês (1630–1654) — História Viva PE" },
+      { title: "Recife neerlandês (1630–1654) — Recife pelo Tempo" },
       { name: "description", content: "Contexto, objetivos e temas da viagem pelo Recife durante o domínio neerlandês." },
       { property: "og:title", content: "Recife durante o domínio neerlandês" },
       { property: "og:description", content: "Prepare-se para a viagem guiada pelo Recife do século XVII." },

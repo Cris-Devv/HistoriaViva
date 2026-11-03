@@ -6,8 +6,10 @@ import {
 } from "./streetview/navigation.js";
 import { locations } from "./data/locations.js";
 import { initializeUi, updateUi } from "./ui.js";
+import { initializePopups } from "./popups.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    initializePopups();
     initializeUi({
         onSelect: (locationId) => loadLocation(locationId),
         onBack: navigateBack,
