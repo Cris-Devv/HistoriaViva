@@ -8,12 +8,7 @@
 }
 
 .info-hotspot {
-    background: #8edbc7;
-    border: 0.06rem solid #123b52;
-    border-radius: 50%;
-    color: #123b52;
     cursor: pointer;
-    font-weight: 800;
     min-height: 44px;
     min-width: 44px;
     text-align: center;
@@ -22,6 +17,14 @@
 .info-hotspot:hover,
 .info-hotspot:focus {
     filter: brightness(1.2);
+}
+
+.info-hotspot-marker {
+    pointer-events: none;
+}
+
+.info-hotspot-hit {
+    cursor: pointer;
 }
 
 .information-list {

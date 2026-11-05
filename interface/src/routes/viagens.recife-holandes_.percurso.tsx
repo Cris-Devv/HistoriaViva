@@ -8,7 +8,7 @@ export const Route = createFileRoute("/viagens/recife-holandes_/percurso")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Experiência 360°: Recife neerlandês — Recife pelo Tempo" },
+      { title: "Experiência 360°: Recife neerlandês — História Viva" },
       {
         name: "description",
         content: "Explore panoramas 360° do Recife durante o domínio neerlandês.",

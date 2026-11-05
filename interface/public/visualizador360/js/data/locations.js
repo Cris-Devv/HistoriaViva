@@ -24,7 +24,7 @@ export const locations = {
                 label: "Ir para o próximo ponto",
 
                 position: {
-                    x: 0,
+                    x: 3,
                     y: 0,
                     z: -5
                 }
@@ -34,12 +34,23 @@ export const locations = {
         infoHotspots: [
             {
                 id: "estrutura-exemplo",
-                title: "Estrutura de exemplo",
+                title: "Estátua do Barão",
                 description: "Conteúdo demonstrativo para testar os hotspots informativos. Substitua este texto por uma descrição baseada em fonte antes de publicar.",
                 position: {
-                    x: 2,
+                    x: 0,
                     y: 1.5,
-                    z: -4
+                    z: -5
+                },
+                audio: "assets/audio/audio-teste.mp3"
+            }, 
+            {
+                id: "estrutura-exempl1",
+                title: "Banco do Brasil",
+                description: "Conteúdo demonstrativo para testar os hotspots informativos. Substitua este texto por uma descrição baseada em fonte antes de publicar.",
+                position: {
+                    x: -6,
+                    y: 3,
+                    z: -5
                 },
                 audio: "assets/audio/audio-teste.mp3"
             }
@@ -62,14 +73,37 @@ export const locations = {
                 label: "Voltar",
 
                 position: {
-                    x: 0,
+                    x: -5,
                     y: 0,
-                    z: -5
+                    z: 0
                 }
             }
         ],
 
-        infoHotspots: []
+        infoHotspots: [
+            {
+                id: "estrutura-exemplo",
+                title: "Estátua do Barão",
+                description: "Conteúdo demonstrativo para testar os hotspots informativos. Substitua este texto por uma descrição baseada em fonte antes de publicar.",
+                position: {
+                    x: -5,
+                    y: 1.5,
+                    z: -5
+                },
+                audio: "assets/audio/audio-teste.mp3"
+            },
+            {
+                id: "estrutura-exemplo2",
+                title: "Banco do Brasil",
+                description: "Conteúdo demonstrativo para testar os hotspots informativos. Substitua este texto por uma descrição baseada em fonte antes de publicar.",
+                position: {
+                    x: -7,
+                    y: 5,
+                    z: 0
+                },
+                audio: "assets/audio/audio-teste.mp3"
+            }
+        ]
     }
 };
 

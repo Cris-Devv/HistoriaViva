@@ -15,7 +15,7 @@ export function SiteHeader() {
           <span className="grid size-9 place-items-center rounded-md bg-primary text-primary-foreground">
             <Landmark className="size-5" aria-hidden />
           </span>
-          Recife pelo <span className="text-accent">Tempo</span>
+          História <span className="text-accent">Viva</span>
         </Link>
         <nav aria-label="Principal" className="flex gap-1 text-sm">
           {links.map((l) => (
@@ -39,7 +39,7 @@ export function SiteFooter() {
     <footer className="border-t bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:grid-cols-3">
         <div>
-          <p className="font-display text-lg">Recife pelo Tempo</p>
+          <p className="font-display text-lg">História Viva</p>
           <p className="mt-2 text-sm opacity-75">
             Plataforma educacional de viagens históricas imersivas sobre Pernambuco.
           </p>

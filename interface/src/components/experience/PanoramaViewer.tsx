@@ -9,8 +9,8 @@ export function PanoramaViewer({ className }: PanoramaViewerProps) {
 
   return (
     <iframe
-      className={cn("block h-full min-h-[min(68vh,720px)] w-full border-0", className)}
-      title="Visualizador 360° do Recife pelo Tempo"
+      className={cn("block h-[min(72vh,760px)] min-h-[390px] w-full border-0", className)}
+      title="Visualizador 360° do História Viva"
       src={viewerUrl}
       loading="eager"
       scrolling="no"

@@ -1,5 +1,16 @@
 import { locations } from "../data/locations.js";
 
+const informationIconUrl = new URL("../../assets/images/panoramas/Information_icon.svg.webp", import.meta.url).href;
+
+if (!AFRAME.components["face-camera"]) {
+    AFRAME.registerComponent("face-camera", {
+        tick() {
+            const camera = this.el.sceneEl?.camera;
+            if (camera) this.el.object3D.lookAt(camera.getWorldPosition(new THREE.Vector3()));
+        }
+    });
+}
+
 function setPosition(element, position) {
     element.setAttribute("position", `${position.x} ${position.y} ${position.z}`);
 }
@@ -42,23 +53,26 @@ export function renderInfoHotspots(location, container, onSelect) {
     }
 
     (location.infoHotspots ?? []).forEach((infoHotspot) => {
-        const hotspot = document.createElement("a-sphere");
+        const hotspot = document.createElement("a-entity");
         hotspot.className = "info-hotspot";
         setPosition(hotspot, infoHotspot.position);
-        hotspot.setAttribute("radius", "0.2");
-        hotspot.setAttribute("material", "color: #8edbc7; shader: standard");
-        hotspot.setAttribute("geometry", "primitive: sphere; radius: 0.28");
+        hotspot.setAttribute("face-camera", "");
         hotspot.setAttribute("raycastable", "");
         hotspot.setAttribute("aria-label", `Informações: ${infoHotspot.title}`);
         hotspot.setAttribute("tabindex", "0");
-        const marker = document.createElement("a-text");
-        marker.setAttribute("value", "i");
-        marker.setAttribute("align", "center");
-        marker.setAttribute("color", "#123b52");
-        marker.setAttribute("position", "0 0 0.3");
-        marker.setAttribute("scale", "1.5 1.5 1.5");
-        marker.setAttribute("side", "double");
+        const marker = document.createElement("a-plane");
+        marker.className = "info-hotspot-marker";
+        marker.setAttribute("width", "0.62");
+        marker.setAttribute("height", "0.62");
+        marker.setAttribute("material", `src: ${informationIconUrl}; transparent: true; alphaTest: 0.1; side: double`);
         hotspot.appendChild(marker);
+        const hitTarget = document.createElement("a-plane");
+        hitTarget.className = "info-hotspot-hit";
+        hitTarget.setAttribute("width", "0.9");
+        hitTarget.setAttribute("height", "0.9");
+        hitTarget.setAttribute("position", "0 0 -0.01");
+        hitTarget.setAttribute("material", "transparent: true; opacity: 0; side: double");
+        hotspot.appendChild(hitTarget);
         hotspot.addEventListener("click", () => onSelect(infoHotspot, hotspot));
         hotspot.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {

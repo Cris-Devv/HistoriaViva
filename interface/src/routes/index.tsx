@@ -7,13 +7,13 @@ import { experiencia, paradas } from "@/content/recife-holandes";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Recife pelo Tempo — Conheça Pernambuco através do tempo" },
+      { title: "História Viva — Conheça Pernambuco através do tempo" },
       {
         name: "description",
         content:
           "Viagens históricas imersivas pela história de Pernambuco, com panoramas 360° no navegador.",
       },
-      { property: "og:title", content: "Recife pelo Tempo" },
+      { property: "og:title", content: "História Viva" },
       {
         property: "og:description",
         content: "Conheça Pernambuco através do tempo com viagens históricas guiadas em 360°.",
@@ -61,11 +61,11 @@ function Index() {
             Plataforma educacional
           </p>
           <h1 className="mt-3 max-w-2xl text-4xl font-semibold leading-tight sm:text-6xl">
-            Conheça Pernambuco através do tempo
+            História Viva
           </h1>
           <p className="mt-5 max-w-xl text-lg opacity-90">
-            Viaje por panoramas 360° do passado pernambucano, com narração e conteúdo didático,
-            direto no navegador.
+            Explore cidades, lugares e períodos históricos por experiências imersivas, começando
+            pelo Recife, com narração e conteúdo didático direto no navegador.
           </p>
           <Button asChild size="lg" variant="accent" className="mt-8">
             <Link to="/viagens">Iniciar viagem no tempo</Link>

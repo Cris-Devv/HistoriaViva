@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre o projeto — Recife pelo Tempo" },
+      { title: "Sobre o projeto — História Viva" },
       {
         name: "description",
-        content: "O projeto Recife pelo Tempo e a experiência histórica com panoramas 360°.",
+        content: "História Viva é uma plataforma educacional de experiências históricas imersivas.",
       },
-      { property: "og:title", content: "Sobre o projeto — Recife pelo Tempo" },
+      { property: "og:title", content: "Sobre o projeto — História Viva" },
       { property: "og:description", content: "Educação, tecnologia e a história de Pernambuco." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -33,9 +33,9 @@ function Sobre() {
       <h1 className="text-4xl font-semibold">Sobre o projeto</h1>
       <div className="mt-6 space-y-4 leading-relaxed text-muted-foreground">
         <p>
-          O Recife pelo Tempo é uma plataforma educacional para estudantes, professores e o público
-          em geral conhecerem períodos da história de Pernambuco por meio de viagens virtuais
-          guiadas.
+          História Viva é uma plataforma educacional para estudantes, professores e o público em
+          geral conhecerem cidades, lugares e períodos históricos por meio de viagens virtuais
+          guiadas, começando pelo Recife.
         </p>
         <p>
           A experiência atual usa um visualizador 360° independente, integrado à aplicação por

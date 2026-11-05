@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recife pelo Tempo</title>
+    <title>Visualizador 360° — História Viva</title>
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/streetview.css">
@@ -12,8 +12,8 @@
     <header class="site-header">
         <div>
             <p class="eyebrow">Experiência histórica imersiva</p>
-            <h1>Recife pelo Tempo</h1>
-            <p>Explore a cidade através do tempo.</p>
+            <h1>História Viva</h1>
+            <p>Explore o Recife através do tempo.</p>
         </div>
         <button id="locations-toggle" class="button button-outline" type="button"
             aria-controls="locations-panel" aria-expanded="false">
@@ -41,7 +41,7 @@
                         look-controls="reverseMouseDrag: false"
                         wasd-controls="enabled: false"
                         cursor="rayOrigin: mouse; fuse: false"
-                        raycaster="objects: .hotspot, .info-hotspot; far: 100">
+                        raycaster="objects: .hotspot, .info-hotspot, .info-hotspot-hit; far: 100">
                     </a-camera>
                 </a-entity>
                 <a-entity id="navigation-points"></a-entity>
@@ -95,7 +95,7 @@
                 </button>
             </div>
         </section>
-        <p class="instructions">Arraste para olhar ao redor. Toque nos pontos dourados para visitar outro local ou nos pontos com “i” para saber mais.</p>
+        <p class="instructions">Arraste para olhar ao redor. Toque nos pontos dourados para visitar outro local ou nos ícones de informação para saber mais.</p>
     </main>
     <script type="module" src="js/main.js"></script>
 </body>
