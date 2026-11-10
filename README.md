@@ -1,7 +1,5 @@
-# Recife pelo Tempo
-
-O Recife pelo Tempo é uma experiência imersiva que permite explorar o passado do Recife por
-meio de panoramas 360°.
+# História Viva
+O História Viva é uma experiência 3D que permite explorar o passado do Recife de forma imersiva.
 
 ## Estrutura do projeto
 
