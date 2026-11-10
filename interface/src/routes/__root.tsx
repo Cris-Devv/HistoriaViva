@@ -79,8 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "História Viva PE" },
-      { name: "description", content: "Viagens históricas imersivas por Pernambuco." },
+      { title: "História Viva" },
+      {
+        name: "description",
+        content: "Explore cidades, lugares e períodos históricos por experiências imersivas.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
           ],

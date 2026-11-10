@@ -4,36 +4,44 @@ O História Viva é uma experiência 3D que permite explorar o passado do Recife
 ## Estrutura do projeto
 
 - `interface/`: aplicação principal Lovable/TanStack Start, React e TypeScript.
-- `visualizador360/`: visualizador independente em HTML, JavaScript Vanilla e A-Frame.
+- `interface/public/visualizador360/`: visualizador em HTML, JavaScript Vanilla e A-Frame,
+  incorporado à aplicação principal por iframe.
 - `docs/`: documentos do projeto.
 
 ## Interface principal
 
-A rota `/viagens/recife-holandes/percurso` renderiza o cenário 3D atual em
-`interface/src/components/scene/RecifeScene.tsx`.
+A rota `/viagens/recife-holandes/percurso` incorpora o visualizador por meio de
+`interface/src/components/experience/PanoramaViewer.tsx`. O visualizador é servido como
+recurso estático em `interface/public/visualizador360/`.
 
 ## Visualizador 360°
 
-As localidades ficam centralizadas em `visualizador360/js/data/locations.js`. Cada local possui
-nome, descrição, período, panorama e conexões para os hotspots.
+As localidades ficam centralizadas em
+`interface/public/visualizador360/js/data/locations.js`. Cada local possui nome, descrição,
+período, panorama e conexões para os hotspots.
 
-O histórico é controlado por `visualizador360/js/streetview/history.js`, mantendo pilhas
-independentes para voltar e avançar. Trocas feitas por hotspots, pelo menu ou
-pelos controles atualizam o panorama e a interface por meio do evento
-`locationchange`.
+O histórico é controlado por
+`interface/public/visualizador360/js/streetview/history.js`, mantendo pilhas independentes
+para voltar e avançar. Trocas feitas por hotspots, pelo menu ou pelos controles atualizam o
+panorama e a interface por meio do evento `locationchange`.
 
-Para executar a interface principal:
+Para executar a interface:
 
 ```bash
 cd interface
 npm run dev
 ```
 
-Para executar o visualizador independente:
+Depois, abra `/viagens/recife-holandes/percurso`. O visualizador também pode ser acessado
+diretamente em `/visualizador360/`; ele precisa ser servido por HTTP para que os módulos ES,
+os panoramas e os arquivos de áudio sejam carregados corretamente.
 
-```bash
-npx vite visualizador360 --host 127.0.0.1 --port 4174
-```
+O visualizador mantém sua lógica independente da interface React. Para adicionar uma
+localidade, edite `interface/public/visualizador360/js/data/locations.js` com `id`, nome,
+período, descrição e caminho do panorama. Cadastre hotspots de navegação em `connections`,
+com `target`, `label` e `position`; cadastre pontos informativos em `infoHotspots`, com
+`id`, título, descrição e posição. Arquivos de áudio devem ficar em
+`interface/public/visualizador360/assets/audio/` e ser referenciados por caminho relativo.
 
-Depois, abra a URL indicada pelo servidor. O visualizador deve ser executado por
-HTTP para que os módulos ES e os panoramas sejam carregados corretamente.
+O projeto recomenda npm: execute `npm install` e os comandos da interface dentro de
+`interface/`. O visualizador não requer instalação de dependências.

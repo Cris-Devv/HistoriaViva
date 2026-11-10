@@ -1,8 +1,0 @@
-.hotspot {
-    cursor: pointer;
-}
-
-.hotspot:hover,
-.hotspot:focus {
-    filter: brightness(1.15);
-}

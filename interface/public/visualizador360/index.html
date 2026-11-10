@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recife pelo Tempo</title>
+    <title>Visualizador 360° — História Viva</title>
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/streetview.css">
@@ -12,8 +12,8 @@
     <header class="site-header">
         <div>
             <p class="eyebrow">Experiência histórica imersiva</p>
-            <h1>Recife pelo Tempo</h1>
-            <p>Explore a cidade através do tempo.</p>
+            <h1>História Viva</h1>
+            <p>Explore o Recife através do tempo.</p>
         </div>
         <button id="locations-toggle" class="button button-outline" type="button"
             aria-controls="locations-panel" aria-expanded="false">
@@ -41,11 +41,38 @@
                         look-controls="reverseMouseDrag: false"
                         wasd-controls="enabled: false"
                         cursor="rayOrigin: mouse; fuse: false"
-                        raycaster="objects: .hotspot">
+                        raycaster="objects: .hotspot, .info-hotspot, .info-hotspot-hit; far: 100">
                     </a-camera>
                 </a-entity>
                 <a-entity id="navigation-points"></a-entity>
+                <a-entity id="information-points"></a-entity>
             </a-scene>
+            <nav id="information-list" class="information-list" aria-label="Pontos informativos" hidden></nav>
+            <dialog id="info-popup" class="info-popup" aria-modal="true"
+                aria-labelledby="info-popup-title"
+                aria-describedby="info-popup-description"
+                aria-hidden="true" hidden>
+                <div class="info-popup-card">
+                    <div class="info-popup-heading">
+                        <span class="info-popup-icon" aria-hidden="true">i</span>
+                        <button id="info-popup-close" class="icon-button" type="button"
+                            aria-label="Fechar informações">×</button>
+                    </div>
+                    <h2 id="info-popup-title"></h2>
+                    <p id="info-popup-description"></p>
+                    <div id="info-popup-audio" class="info-popup-audio" hidden>
+                        <button id="info-popup-audio-toggle" class="button button-audio" type="button"
+                            aria-label="Reproduzir narração">
+                            <span aria-hidden="true">▶</span>
+                            <span id="info-popup-audio-label">Ouvir narração</span>
+                        </button>
+                        <button id="info-popup-audio-stop" class="button button-audio-stop" type="button">
+                            Parar
+                        </button>
+                        <p id="info-popup-audio-status" class="info-popup-audio-status" role="status"></p>
+                    </div>
+                </div>
+            </dialog>
         </section>
 
         <section class="experience-bar" aria-live="polite">
@@ -68,7 +95,7 @@
                 </button>
             </div>
         </section>
-        <p class="instructions">Arraste para olhar ao redor. Toque nos pontos dourados para visitar outro local.</p>
+        <p class="instructions">Arraste para olhar ao redor. Toque nos pontos dourados para visitar outro local ou nos ícones de informação para saber mais.</p>
     </main>
     <script type="module" src="js/main.js"></script>
 </body>
