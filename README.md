@@ -45,6 +45,3 @@ com `target`, `label` e `position`; cadastre pontos informativos em `infoHotspot
 
 O projeto recomenda npm: execute `npm install` e os comandos da interface dentro de
 `interface/`. O visualizador não requer instalação de dependências.
-
-## Deploy do projeto:
-https://historiaviva-three.vercel.app/
